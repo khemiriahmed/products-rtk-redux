@@ -1,0 +1,22 @@
+
+Voilà la version commentée : même code, mais chaque fichier a un en-tête « ÉTAPE n » et des commentaires en français qui expliquent le pourquoi de chaque bloc.
+
+Ordre de lecture (du plus bas niveau au plus haut)
+
+1 productsApi.js : appels HTTP uniquement, sans Redux.
+2 productsSlice.js : le cerveau, découpé en 5 parties (adapter, thunks, slice, exports, selectors).
+3 store.js : branche le slice dans Redux.
+4 main.jsx : Provider qui donne le store à React.
+5 useDebounce.js : hook qui attend la fin de la frappe.
+6 SearchBar.jsx : state local + debounce, puis dispatch vers Redux.
+7 ProductTable.jsx : composant d'affichage pur (props seulement).
+8 ProductForm.jsx : formulaire unique pour créer et modifier, avec validation.
+9 ProductsPage.jsx : la page qui lit Redux et assemble tout.
+
+Le flux à retenir
+
+clic UI → dispatch(thunk) → API → reducer (slice) → store → selector → UI
+
+Exemple concret, ajouter un produit : ProductForm fait dispatch(createProduct), le thunk appelle productsApi.create, puis extraReducers exécute adapter.addOne. Le store change, selectPagination se recalcule et le tableau se met à jour.
+
+Si tu veux, on peut faire la suite fichier par fichier : dis-moi lequel te paraît encore flou (souvent createAsyncThunk et extraReducers) et je le détaille avec un schéma.
